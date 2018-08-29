@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Controllers
 {
     // ReSharper disable once InconsistentNaming
-    public class UIController : MonoBehaviour
+    public class UIControl : MonoBehaviour
     {
         [Header("Dependencies")]
         [SerializeField] private Slider slider;

@@ -9,9 +9,9 @@ using UnityEngine.UI;
 
 namespace Core
 {
-    [RequireComponent(typeof(UIController))]
     public class GameController : MonoBehaviour
     {
+        [SerializeField] private UIControl ui;
         [SerializeField] private GameObject piePrefab;
         [SerializeField] private GameObject pieGroundPrefab;
 
@@ -23,7 +23,6 @@ namespace Core
         private MonoCache<PieControl> pieCache;
         private MonoCache<PieControl> pieGroundsCache;
 
-        private UIController ui;
         private PieControl activePie;
 
         private void OnValidate()
@@ -40,7 +39,6 @@ namespace Core
 
         private void Awake()
         {
-            ui = GetComponent<UIController>();
             pieCache = new MonoCache<PieControl>(piePrefab, null);
             pieGroundsCache = new MonoCache<PieControl>(pieGroundPrefab, null);
             ui.OnClick.AddListener(OnPlayButtonPressed);
@@ -68,7 +66,7 @@ namespace Core
                 var count = ui.GetCountPies();
                 if (count > 0)
                 {
-                    ui.SetState(UIController.States.Playing);
+                    ui.SetState(UIControl.States.Playing);
                     Initial(count);
                     NextStep();
                     isPlaying = true;
@@ -115,7 +113,7 @@ namespace Core
         private void ResetGame()
         {
             isPlaying = false;
-            ui.SetState(UIController.States.Stopped);
+            ui.SetState(UIControl.States.Stopped);
             pieCache.DespawnAll(p => p?.DisposeTween());
             pieGroundsCache.DespawnAll();
         }
@@ -124,7 +122,7 @@ namespace Core
         {
             if (towers[1].Height >= piesCount || towers[2].Height >= piesCount)
             {
-                ui.SetState(UIController.States.Finish);
+                ui.SetState(UIControl.States.Finish);
             }
             else
             {
